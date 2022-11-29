@@ -3,73 +3,70 @@ package com.developer.gerenciadorFuncionarios.controle;
 import com.developer.gerenciadorFuncionarios.modelo.Funcionario;
 import com.developer.gerenciadorFuncionarios.repositorio.FuncionarioRepositorio;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class FuncionarioControle {
 
-    FuncionarioRepositorio funcionarioRepositorio;
+    @Autowired
+    private FuncionarioRepositorio funcRepository;
 
-    public FuncionarioControle(FuncionarioRepositorio funcionarioRepositorio) {
-        this.funcionarioRepositorio = funcionarioRepositorio;
-    }
-
-    // Método responsável por acessar o formulario.
+    // Acessa o formulario
     @GetMapping("/form")
     public String funcionariosForm(Funcionario funcionario) {
+
         return "addFuncionariosForm";
     }
 
-    // Método responsável por adicionar um novo funcionario.
+    // Adiciona novo funcionario
     @PostMapping("/add")
     public String novo(@Valid Funcionario funcionario, BindingResult result) {
 
-        if(result.hasFieldErrors()) {
+        if (result.hasFieldErrors()) {
             return "redirect:/form";
         }
 
-        funcionarioRepositorio.save(funcionario);
+        funcRepository.save(funcionario);
+
         return "redirect:/home";
     }
 
-    // Método responsável por acessar o formulário de edição dos dados do funcionário.
+    // Acessa o formulario de edição.
     @GetMapping("form/{id}")
-    public String updateForm(Model model, @PathVariable(name = "id") Long id) {
+    public String updateForm(Model model, @PathVariable(name = "id") long id) {
 
-        Funcionario funcionario = funcionarioRepositorio
-                .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+        Funcionario funcionario = funcRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
         model.addAttribute("funcionario", funcionario);
         return "atualizaForm";
     }
 
-    // Método responsável por atualizar os dados do funcionário.
+    // Atualiza funcionario
     @PostMapping("update/{id}")
-    public String alterarFuncionario(@Valid Funcionario funcionario, BindingResult result, @PathVariable Long id) {
+    public String alterarProduto(@Valid Funcionario funcionario, BindingResult result, @PathVariable int id) {
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "redirect:/form";
         }
 
-        funcionarioRepositorio.save(funcionario);
+        funcRepository.save(funcionario);
         return "redirect:/home";
     }
 
-    // Método responsável por apagar os dados do funcionário.
     @GetMapping("delete/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Model model) {
+    @CacheEvict(value = "funcionarios", allEntries = true)
+    public String delete(@PathVariable(name = "id") long id, Model model) {
 
-        Funcionario funcionario = funcionarioRepositorio
-                .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + id));
+        Funcionario funcionario = funcRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
-        funcionarioRepositorio.delete(funcionario);
+        funcRepository.delete(funcionario);
         return "redirect:/home";
     }
 }
