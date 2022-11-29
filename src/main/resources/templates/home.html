@@ -13,9 +13,11 @@
         <tr class="table-dark">
             <th></th>
             <th scope="col">Nome</th>
+            <th scope="col">Sobrenome</th>
             <th scope="col">Cargo</th>
             <th scope="col">Email</th>
             <th scope="col">Salario</th>
+            <th scope="col">Contratação</th>
             <th scope="col">Setor</th>
             <th scope="col"></th>
         </tr>
@@ -23,9 +25,11 @@
         <tr th:each="func : ${funcionarios}">
             <th scope="row"></th>
             <td><span th:text="${func.nome}"></span></td>
+            <td><span th:text="${func.sobrenome}"></span></td>
             <td><span th:text="${func.cargo}"></span></td>
-            <td><span th:text="${func.email}"></td>
+            <td><span th:text="${func.email}"></span></td>
             <td>R$<span th:text="${func.salario}"></span></td>
+            <td><span th:text="${func.dataContratacao}"></span></td>
             <td><span th:text="${func.setor}"></span></td>
             <td class="buttons "><a th:href="@{form/{id}(id=${func.id})}"
                                     th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
