@@ -31,10 +31,15 @@
             <td>R$<span th:text="${func.salario}"></span></td>
             <td><span th:text="${func.dataContratacao}"></span></td>
             <td><span th:text="${func.setor}"></span></td>
-            <td class="buttons "><a th:href="@{form/{id}(id=${func.id})}"
-                                    th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                <a th:href="@{delete/{id}(id=${func.id})}" th:method="delete"
-                   class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+
+            <td class="buttons ">
+                <a th:href="@{form/{id}(id=${func.id})}" th:method="get" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <a th:href="@{delete/{id}(id=${func.id})}" th:method="delete" class="btn btn-danger">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
         </tr>
     </table>
 
