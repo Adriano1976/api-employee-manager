@@ -69,4 +69,14 @@ Depois de executar o projeto via terminal ou via IDE, você poderá fazer os tes
 * LinkedIn: [Adriano Santos](https://www.linkedin.com/in/adrianosantos-dev/)
 * WhatsApp: [(79)99896-0414](https://wa.me/79998960414)
 
+<hr>
+
+<div align="center">
+<br><p align="centre"><b>Contagem de visitantes</b></p>  
+<p align="center"><img align="center" src="https://profile-counter.glitch.me/{api-employee-manager}/count.svg" /></p> 
+<br>  
+
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=87CEFA&height=120&section=footer"/>**** 
+</div>
+
 
